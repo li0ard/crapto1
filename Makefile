@@ -1,4 +1,6 @@
 build:
-	gcc crapto1.c crapto1.h crypto1.c main.c -o crapto1
-rm: crapto1
-	rm crapto1
+	gcc crypto1/crapto1.c crypto1/crapto1.h crypto1/crypto1.c mf32.c -o mf32
+	gcc crypto1/crapto1.c crypto1/crapto1.h crypto1/crypto1.c mf64.c -o mf64
+clean:
+	rm mf32
+	rm mf64
