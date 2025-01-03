@@ -3,6 +3,10 @@
 Utilities extract keys from nonces collected during the authentication process
 
 ## Compilation
+
+> [!TIP]
+> Arch Linux users can install crapto1 from [AUR](https://aur.archlinux.org/packages/crapto1)
+
 1. Clone repo
 - `git clone https://github.com/li0ard/crapto1 && cd crapto1/`
 2. Compile using `make`
