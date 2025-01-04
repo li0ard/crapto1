@@ -54,4 +54,5 @@ dkms.conf
 crapto1
 mf32
 mf64
-.vscode/settings.json
+n2k
+.vscode/

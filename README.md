@@ -27,6 +27,12 @@ Syntax: `./mf32 <uid> <tag_challenge> <reader_challenge> <reader_response> <tag_
 Syntax: `./mf64 <uid> <tag_challenge> <nr_enc> <reader_response> <tag_response>`
 - Example: `./mf64 c108416a ABCD1949 59D5920F 15B9D553 A79A3FEE`
 
+### n2k
+
+`n2k` working with parity and keystream nonces
+Syntax: `./n2k <uid> <nt> <par> <ks>`
+- Example: `./n2k e9cadd9c a8bf4a12 a020a8285858b090 050f010607060e07`
+
 ## Acknowledgements
 
  - [bla Code](https://github.com/ErnyTech/crapto1)
