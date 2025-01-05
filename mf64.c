@@ -56,8 +56,16 @@ int main (int argc, char *argv[]) {
 
     struct Crypto1State *revstate;
 	uint64_t key;
-    uint32_t ks2 = reader_response ^ prng_successor(tag_challenge, 64);
+    uint32_t p64 = prng_successor(tag_challenge, 64);
+    uint32_t ks2 = reader_response ^ p64;
 	uint32_t ks3 = tag_response ^ prng_successor(tag_challenge, 96);
+
+    printf("\nLFSR successors of the tag challenge:\n");
+    printf(" nt': %08x\n", p64);
+    printf(" nt'': %08x\n", prng_successor(p64, 32));
+    printf("\nKeystream used to generate {ar} and {at}:\n");
+    printf(" ks2: %08x\n", ks2);
+    printf(" ks3: %08x\n", ks3);
 
 	revstate = lfsr_recovery64(ks2, ks3);
 

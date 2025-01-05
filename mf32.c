@@ -38,9 +38,19 @@ int main (int argc, char *argv[]) {
     printf("| Tag challenge #2    | nt1  | %08x |\n", tag_challenge2);
     printf("| Reader challenge #2 | nr1  | %08x |\n", reader_challenge2);
     printf("| Reader response #2  | ar1  | %08x |\n", reader_response2);
-    printf("+---------------------+------+----------+");
+    printf("+---------------------+------+----------+\n");
 
-    struct Crypto1State *s = lfsr_recovery32(reader_response ^ prng_successor(tag_challenge, 64), 0), *t;
+    uint32_t p64 = prng_successor(tag_challenge, 64);
+    uint32_t p64b = prng_successor(tag_challenge2, 64);
+    uint32_t ks2 = reader_response ^ p64;
+
+    printf("LFSR successors of the tag challenge:\n");
+    printf(" nt0': %08x\n", p64);
+    printf(" nt1': %08x\n", prng_successor(p64, 32));
+    printf("\nKeystream used to generate {ar} and {at}:\n");
+    printf(" ks2: %08x\n", ks2);
+
+    struct Crypto1State *s = lfsr_recovery32(ks2, 0), *t;
 	for(t = s; t->odd | t->even; ++t) {
 		lfsr_rollback_word(t, 0, 0);
 		lfsr_rollback_word(t, reader_challenge, 1);
@@ -48,8 +58,8 @@ int main (int argc, char *argv[]) {
 		crypto1_get_lfsr(t, &key);
 		crypto1_word(t, uid ^ tag_challenge2, 0);
 		crypto1_word(t, reader_challenge2, 1);
-		if (reader_response2 == (crypto1_word(t, 0, 0) ^ prng_successor(tag_challenge2, 64))) {
-			printf("\n\nKey: %012" PRIx64 "\n\n", key);
+		if (reader_response2 == (crypto1_word(t, 0, 0) ^ p64b)) {
+			printf("\nKey: %012" PRIx64 "\n\n", key);
 			break;
 		}
 	}
